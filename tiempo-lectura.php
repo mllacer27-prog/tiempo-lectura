@@ -5,12 +5,14 @@
  * Version: 0.1
  * Author: Miguel Llácer
  * License: GPL v2 or later
+ * Text Domain: tiempo-lectura
  */
 
 // Si alguien abre este archivo directamente, no hacemos nada.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 // Calcula cuántos minutos se tarda en leer un texto.
 function tl_calcular_minutos( $texto ) {
 	// Quitamos el HTML para contar solo las palabras.
@@ -32,7 +34,13 @@ function tl_mostrar_tiempo( $contenido ) {
 	}
 
 	$minutos = tl_calcular_minutos( $contenido );
-	$aviso   = '<p class="tiempo-lectura">Tiempo de lectura: ' . $minutos . ' min</p>';
+		/* translators: %s: número de minutos */
+	$texto = sprintf( __( 'Tiempo de lectura: %s min', 'tiempo-lectura' ), $minutos );
+	$aviso = '<p class="tiempo-lectura">' . $texto . '</p>';
+
+	return $aviso . $contenido;
+}
+add_filter( 'the_content', 'tl_mostrar_tiempo' );
 
 	return $aviso . $contenido;
 }
