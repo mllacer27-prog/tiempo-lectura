@@ -34,13 +34,9 @@ function tl_mostrar_tiempo( $contenido ) {
 	}
 
 	$minutos = tl_calcular_minutos( $contenido );
-		/* translators: %s: número de minutos */
+	/* translators: %s: número de minutos */
 	$texto = sprintf( __( 'Tiempo de lectura: %s min', 'tiempo-lectura' ), $minutos );
-	$aviso = '<p class="tiempo-lectura">' . $texto . '</p>';
-
-	return $aviso . $contenido;
-}
-add_filter( 'the_content', 'tl_mostrar_tiempo' );
+	$aviso = '<p class="tiempo-lectura">' . esc_html( $texto ) . '</p>';
 
 	return $aviso . $contenido;
 }
