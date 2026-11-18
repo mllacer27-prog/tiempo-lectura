@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Tiempo de lectura
  * Description: Muestra cuánto se tarda en leer cada entrada.
- * Version: 0.1
+ * Version: 0.2
  * Author: Miguel Llácer
  * License: GPL v2 or later
  * Text Domain: tiempo-lectura
@@ -20,7 +20,11 @@ function tl_calcular_minutos( $texto ) {
 	$palabras = count( preg_split( '/\s+/', $texto, -1, PREG_SPLIT_NO_EMPTY ) );
 
 	// Una persona lee unas 200 palabras por minuto.
-	$minutos = ceil( $palabras / 200 );
+	// Otro plugin o el tema pueden cambiar el número con este filtro.
+	$por_minuto = (int) apply_filters( 'tl_palabras_por_minuto', 200 );
+	$por_minuto = max( 1, $por_minuto );
+
+	$minutos = ceil( $palabras / $por_minuto );
 
 	// Como mínimo, 1 minuto.
 	return max( 1, $minutos );
